@@ -11,7 +11,7 @@ function HomePage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // important for cookies/session
-        body: JSON.stringify({ username: "new", password: "account" }),
+        body: JSON.stringify({ username: "work", password: "pls" }),
       });
       const data = await response.json();
       console.log(data);

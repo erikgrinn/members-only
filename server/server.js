@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require("node:path");
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -31,7 +32,6 @@ app.use(cors(corsOptions));
 // for using React states
 app.use(express.json());
 
-// passport
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -41,9 +41,17 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
+
+      // for bcrypt password
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
         return done(null, false, { message: "Incorrect password" });
       }
+
+      // for plaintext password
+      // if (user.password !== password) {
+      //   return done(null, false, { message: "Incorrect password" });
+      // }
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -68,7 +76,15 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
-//
+
+// should grab user after authenticated and place in the locals object
+// for ease of use throughout express
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  console.log(res.locals.currentUser);
+  next();
+});
+
 app.use("/sign-up", signUpRouter);
 
 app.post("/log-in", (req, res, next) => {
@@ -83,6 +99,16 @@ app.post("/log-in", (req, res, next) => {
       return res.json({ success: true, user });
     });
   })(req, res, next); // invoking the arrow function/custom callback
+});
+
+// passport add req.logout that logs out of session
+app.get("/log-out", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
 
 app.use("/", indexRouter);
