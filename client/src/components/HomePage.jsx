@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 // import styles from "../styles/App.module.css";
 
-function App() {
+function HomePage() {
   const [fetchedData, setFetchedData] = useState("");
 
   useEffect(() => {
@@ -10,8 +10,8 @@ function App() {
       try {
         const response = await fetch("http://localhost:8080/");
         const data = await response.json();
-        console.log(data);
-        setFetchedData(data);
+        console.log(data.length);
+        setFetchedData(data.length >= 1 ? data : "empty array");
         // axios
         // const response = await axios.get("http://localhost:8080/");
         // console.log(response.data);
@@ -26,4 +26,4 @@ function App() {
   return <div>{fetchedData}</div>;
 }
 
-export default App;
+export default HomePage;

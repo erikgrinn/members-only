@@ -1,7 +1,6 @@
 const pool = require("../db/pool");
 const path = require("node:path");
 
-
 async function signUpPost(req, res, next) {
   try {
     await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, req.body.password]);
@@ -11,7 +10,6 @@ async function signUpPost(req, res, next) {
   }
 }
 
-
 module.exports = {
-  signUpPost
+  signUpPost,
 };
