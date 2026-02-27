@@ -9,31 +9,17 @@ const { Client } = require("pg");
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 
-const SQLDrop = `
-DROP TABLE usernames;
-`;
-
-const SQL = `
-CREATE TABLE IF NOT EXISTS usernames (
-  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  username VARCHAR ( 255 )
-);
-
-INSERT INTO usernames (username) 
-VALUES
-  ('Bryan'),
-  ('Odin'),
-  ('Damon');
+const SQL = `SELECT * FROM users;
 `;
 
 async function seed() {
   console.log("seeding...");
   const client = new Client({
-    connectionString: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost:5432/top_users`,
+    connectionString: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost:5432/auth_db`,
   });
   await client.connect();
-  await client.query(SQLDrop)
-  await client.query(SQL);
+  const result = await client.query(SQL);
+  console.log(result.rows); // undefined for all but SELECT
   await client.end();
   console.log("done");
 }
