@@ -15,7 +15,7 @@ function SignUpPage() {
     e.preventDefault(); // Prevent page reload (optional?)
 
     // Send data to backend
-    await fetch("http://localhost:8080/sign-up", {
+    await fetch("http://localhost:8080/log-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -37,7 +37,7 @@ function SignUpPage() {
     // use below for integration with React, using express.json()
     // make sure to match up with Express req.body
     <>
-      <h1>Sign Up</h1>
+      <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <input
           name="username"
@@ -54,7 +54,7 @@ function SignUpPage() {
           placeholder="password"
         />
         <br></br>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Log In</button>
       </form>
     </>
 
