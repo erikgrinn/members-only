@@ -79,6 +79,7 @@ app.use(passport.session());
 
 // should grab user after authenticated and place in the locals object
 // for ease of use throughout express
+// not hitting for log-in frontend page - should unify, its all over the place
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   console.log(res.locals.currentUser);
@@ -96,6 +97,7 @@ app.post("/log-in", (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) return next(err);
+      console.log(req.user);
       return res.json({ success: true, user });
     });
   })(req, res, next); // invoking the arrow function/custom callback

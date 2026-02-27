@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 // import styles from "../styles/App.module.css";
 
-function SignUpPage() {
+function LogInPage() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -72,4 +72,4 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
+export default LogInPage;
