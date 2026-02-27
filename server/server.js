@@ -71,18 +71,27 @@ app.use(passport.session());
 //
 app.use("/sign-up", signUpRouter);
 
-app.post("/log-in", passport.authenticate("local"), (req, res) => {
-  // If authentication succeeds, send user info or a success message
-  res.json({ success: true, user: req.user });
+app.post("/log-in", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // This sends a JSON 401 response, and your error handler is not needed for this case
+      return res.status(401).json({ success: false, message: info?.message || "Authentication failed" });
+    }
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      return res.json({ success: true, user });
+    });
+  })(req, res, next);
 });
 
 app.use("/", indexRouter);
 
 // global error
 app.use((err, req, res, next) => {
-  if (err && err.name === "AuthenticationError") {
-    return res.status(401).json({ success: false, message: "Authentication failed" });
-  }
+  // if (err && err.name === "AuthenticationError") {
+  //   return res.status(401).json({ success: false, message: "Authentication failed" });
+  // }
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
