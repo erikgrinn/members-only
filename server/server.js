@@ -9,7 +9,7 @@ const cors = require("cors");
 
 const indexRouter = require("./routes/indexRouter");
 const signUpRouter = require("./routes/signUpRouter");
-const logInRouter = require("./routes/logInRouter");
+// const logInRouter = require("./routes/logInRouter");
 
 const corsOptions = {
   origin: ["http://localhost:5173"], // vite
@@ -67,19 +67,18 @@ app.use(passport.session());
 //
 app.use("/sign-up", signUpRouter);
 
-
-app.post(
-  "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/",
-  }),
-);
+app.post("/log-in", passport.authenticate("local"), (req, res) => {
+  // If authentication succeeds, send user info or a success message
+  res.json({ success: true, user: req.user });
+});
 
 app.use("/", indexRouter);
 
 // global error
 app.use((err, req, res, next) => {
+  if (err && err.name === "AuthenticationError") {
+    return res.status(401).json({ success: false, message: "Authentication failed" });
+  }
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
