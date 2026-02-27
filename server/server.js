@@ -20,15 +20,17 @@ app.use(cors(corsOptions));
 // use this to serve CSS (and others) if sending HTML with res.sendFile
 // app.use(express.static(__dirname))
 
-app.use(express.json());
+// for sending direct from form element
+app.use(express.urlencoded({ extended: true }));
+
+// for using React states
+// app.use(express.json());
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 
-app.get("/", indexRouter);
-
-app.post("/sign-up", signUpRouter);
-
+app.use("/sign-up", signUpRouter);
+app.use("/", indexRouter);
 // global error
 app.use((err, req, res, next) => {
   console.error(err.stack);
