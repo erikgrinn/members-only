@@ -75,14 +75,14 @@ app.post("/log-in", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
-      // This sends a JSON 401 response, and your error handler is not needed for this case
+      // sends a JSON 401 response, and error handler is not needed for this case
       return res.status(401).json({ success: false, message: info?.message || "Authentication failed" });
     }
     req.logIn(user, (err) => {
       if (err) return next(err);
       return res.json({ success: true, user });
     });
-  })(req, res, next);
+  })(req, res, next); // invoking the arrow function/custom callback
 });
 
 app.use("/", indexRouter);
