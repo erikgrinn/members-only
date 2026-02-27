@@ -1,18 +1,22 @@
 require("dotenv").config();
 const path = require("node:path");
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
+
+// for passport
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const cors = require("cors");
+const pool = require("./db/pool");
 
 const indexRouter = require("./routes/indexRouter");
 const signUpRouter = require("./routes/signUpRouter");
-// const logInRouter = require("./routes/logInRouter");
 
 const corsOptions = {
   origin: ["http://localhost:5173"], // vite
+  credentials: true,
 };
 
 // cors is middleware
