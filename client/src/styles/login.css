@@ -110,10 +110,13 @@ input:valid {
   border-color: green;
 }
 
-/* red on load... */
-input:invalid {
+/* red on load...should use js */
+/* input:invalid {
   border-color: red;
-}
+} */
+/* input:invalid:focus {
+  border-color: red;
+} */
 
 .error-message {
   color: red;

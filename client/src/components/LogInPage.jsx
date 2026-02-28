@@ -51,6 +51,18 @@ function LogInPage() {
           <div className="container">
             <div className="input-group">
               <div className="input-half">
+                <label htmlFor="username">USERNAME</label>
+                <input type="text" id="username" required />
+                <span className="error-message" id="username-error"></span>
+              </div>
+              <div className="input-half">
+                <label htmlFor="email">EMAIL</label>
+                <input type="email" id="email" required />
+                <span className="error-message" id="email-error"></span>
+              </div>
+            </div>
+            {/* <div className="input-group">
+              <div className="input-half">
                 <label htmlFor="first-name">FIRST NAME</label>
                 <input type="text" id="first-name" required />
                 <span className="error-message" id="first-name-error"></span>
@@ -60,8 +72,8 @@ function LogInPage() {
                 <input type="text" id="last-name" required />
                 <span className="error-message" id="last-name-error"></span>
               </div>
-            </div>
-            <div className="input-group">
+            </div> */}
+            {/* <div className="input-group">
               <div className="input-half">
                 <label htmlFor="email">EMAIL</label>
                 <input type="email" id="email" required />
@@ -72,7 +84,7 @@ function LogInPage() {
                 <input type="number" id="phone-number" required />
                 <span className="error-message" id="phone-number-error"></span>
               </div>
-            </div>
+            </div> */}
             <div className="input-group">
               <div className="input-half">
                 <label htmlFor="password">PASSWORD</label>
