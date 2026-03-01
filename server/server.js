@@ -13,7 +13,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const pool = require("./db/pool");
 
 const indexRouter = require("./routes/indexRouter");
-const signUpRouter = require("./routes/signUpRouter");
+// const signUpRouter = require("./routes/signUpRouter");
 
 const corsOptions = {
   origin: ["http://localhost:5173"], // vite
@@ -77,16 +77,18 @@ passport.deserializeUser(async (id, done) => {
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 
-// should grab user after authenticated and place in the locals object
-// for ease of use throughout express
-// not hitting for log-in frontend page - should unify, its all over the place
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  console.log(res.locals.currentUser || "no user");
-  next();
+app.post("/sign-up", async (req, res, next) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10); // added for bcrypt
+    // hashedPassword instead
+    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, hashedPassword]);
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
 });
 
-app.use("/sign-up", signUpRouter);
+// app.use("/sign-up", signUpRouter);
 
 app.post("/log-in", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -97,13 +99,24 @@ app.post("/log-in", (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) return next(err);
+      // place in res.locals
+      res.locals.currentUser = req.user;
       console.log(req.user);
       return res.json({ success: true, user });
     });
   })(req, res, next); // invoking the arrow function/custom callback
 });
 
-// passport add req.logout that logs out of session
+// should grab user after authenticated
+// for ease of use throughout express
+// not hitting for log-in frontend page - should unify, its all over the place
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  console.log(res.locals.currentUser || "no user");
+  next();
+});
+
+// passport adds req.logout that logs out of session
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
