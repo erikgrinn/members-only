@@ -15,13 +15,18 @@ function SignUpPage() {
     e.preventDefault(); // Prevent page reload (optional?)
 
     // Send data to backend
-    await fetch("http://localhost:8080/sign-up", {
+    const result = await fetch("http://localhost:8080/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
     setUsername(""); // Clear input after submit
     setPassword("");
+
+    if (!result.ok) {
+      alert("invalid login");
+    }
+
     navigate(0); // to ensure inputs are empty
   }
 
@@ -39,7 +44,7 @@ function SignUpPage() {
         </div>
         <form onSubmit={handleSubmit} noValidate>
           <div className="container">
-            {/* <div className="input-group">
+            <div className="input-group">
               <div className="input-half">
                 <label htmlFor="first-name">FIRST NAME</label>
                 <input type="text" id="first-name" required />
@@ -50,18 +55,18 @@ function SignUpPage() {
                 <input type="text" id="last-name" required />
                 <span className="error-message" id="last-name-error"></span>
               </div>
-            </div> */}
+            </div>
             <div className="input-group">
               <div className="input-half">
                 <label htmlFor="username">USERNAME</label>
                 <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required />
                 <span className="error-message" id="username-error"></span>
               </div>
-              {/* <div className="input-half">
+              <div className="input-half">
                 <label htmlFor="email">EMAIL</label>
                 <input type="email" id="email" required />
                 <span className="error-message" id="email-error"></span>
-              </div> */}
+              </div>
             </div>
             <div className="input-group">
               <div className="input-half">
@@ -69,11 +74,11 @@ function SignUpPage() {
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
                 <span className="error-message" id="password-error"></span>
               </div>
-              {/* <div className="input-half">
+              <div className="input-half">
                 <label htmlFor="confirm-password">CONFIRM PASSWORD</label>
                 <input type="password" id="confirm-password" required />
                 <span className="error-message" id="confirm-password-error"></span>
-              </div> */}
+              </div>
             </div>
           </div>
           <button type="submit">Create Account</button>

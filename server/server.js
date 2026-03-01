@@ -101,7 +101,7 @@ app.post("/log-in", (req, res, next) => {
       if (err) return next(err);
       // place in res.locals
       res.locals.currentUser = req.user;
-      console.log(req.user);
+      console.log("logged in user: ", req.user);
       return res.json({ success: true, user });
     });
   })(req, res, next); // invoking the arrow function/custom callback

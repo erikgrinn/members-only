@@ -15,14 +15,19 @@ function LogInPage() {
     e.preventDefault(); // Prevent page reload (optional?)
 
     // Send data to backend
-    await fetch("http://localhost:8080/log-in", {
+    const result = await fetch("http://localhost:8080/log-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
     setUsername(""); // Clear input after submit
     setPassword("");
-    navigate(0) // to ensure inputs are empty
+
+    if (!result.ok) {
+      alert("invalid login");
+    }
+
+    navigate(0); // to ensure inputs are empty
   }
 
   const logIn = (
