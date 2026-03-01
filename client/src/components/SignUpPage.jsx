@@ -46,36 +46,36 @@ function SignUpPage() {
         <form onSubmit={handleSubmit} noValidate>
           <div className="container">
             <div className="input-group">
-              <div className="input-half">
+              <div className="input-half input-left">
                 <label htmlFor="first-name">FIRST NAME</label>
                 <input type="text" id="first-name" required />
                 <span className="error-message" id="first-name-error"></span>
               </div>
-              <div className="input-half">
+              <div className="input-half input-right">
                 <label htmlFor="last-name">LAST NAME</label>
                 <input type="text" id="last-name" required />
                 <span className="error-message" id="last-name-error"></span>
               </div>
             </div>
             <div className="input-group">
-              <div className="input-half">
+              <div className="input-half input-left">
                 <label htmlFor="username">USERNAME</label>
                 <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required />
                 <span className="error-message" id="username-error"></span>
               </div>
-              <div className="input-half">
+              <div className="input-half input-right">
                 <label htmlFor="email">EMAIL</label>
                 <input type="email" id="email" required />
                 <span className="error-message" id="email-error"></span>
               </div>
             </div>
             <div className="input-group">
-              <div className="input-half">
+              <div className="input-half input-left">
                 <label htmlFor="password">PASSWORD</label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
                 <span className="error-message" id="password-error"></span>
               </div>
-              <div className="input-half">
+              <div className="input-half input-right">
                 <label htmlFor="confirm-password">CONFIRM PASSWORD</label>
                 <input type="password" id="confirm-password" required />
                 <span className="error-message" id="confirm-password-error"></span>

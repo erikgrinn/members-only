@@ -46,12 +46,12 @@ function LogInPage() {
         <form onSubmit={handleSubmitLogIn} noValidate>
           <div className="container">
             <div className="input-group">
-              <div className="input-half">
+              <div className="input-half input-left">
                 <label htmlFor="username">USERNAME</label>
                 <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required />
                 <span className="error-message" id="username-error"></span>
               </div>
-              <div className="input-half">
+              <div className="input-half input-right">
                 <label htmlFor="password">PASSWORD</label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
                 <span className="error-message" id="password-error"></span>

@@ -53,7 +53,7 @@ function HomePage() {
   }
 
   return (
-    <div>
+    <div className="container">
       <ul>
         {fetchedData.map((user, idx) => (
           <li key={idx}>{user.username}</li>
