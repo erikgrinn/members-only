@@ -82,7 +82,7 @@ app.use(passport.session());
 // not hitting for log-in frontend page - should unify, its all over the place
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  console.log(res.locals.currentUser);
+  console.log(res.locals.currentUser || "no user");
   next();
 });
 

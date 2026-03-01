@@ -5,6 +5,22 @@ import { useState, useEffect } from "react";
 function HomePage() {
   const [fetchedData, setFetchedData] = useState([]);
 
+  async function fetchData() {
+    try {
+      const response = await fetch("http://localhost:8080/");
+      let data = await response.json();
+      data = data.users;
+      console.log(data);
+      setFetchedData(data);
+      // axios
+      // const response = await axios.get("http://localhost:8080/");
+      // console.log(response.data);
+      // setFetchedData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
   useEffect(() => {
     async function login() {
       const response = await fetch("http://localhost:8080/log-in", {
@@ -17,22 +33,8 @@ function HomePage() {
       console.log(data);
       return data;
     }
-    async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:8080/");
-        let data = await response.json();
-        data = data.users;
-        console.log(data);
-        setFetchedData(data);
-        // axios
-        // const response = await axios.get("http://localhost:8080/");
-        // console.log(response.data);
-        // setFetchedData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
+
+    fetchData(); // false positive
     login();
   }, []);
 

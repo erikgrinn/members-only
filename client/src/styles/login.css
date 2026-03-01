@@ -52,6 +52,7 @@ img.big {
   text-align: left;
   justify-content: center;
   height: 100vh;
+  background-color: #596d48;
 }
 
 .right .header {
@@ -71,6 +72,7 @@ img.big {
   background-color: rgb(251, 251, 251);
   box-shadow: 5px 5px 5px rgb(155, 162, 164);
   padding: 28px 24px;
+  background-color: #2f3927;
 }
 
 h2 {
