@@ -24,7 +24,8 @@ function LogInPage() {
     setPassword("");
 
     if (!result.ok) {
-      alert("invalid login");
+      const errorData = await result.json();
+      alert(Error(errorData.message));
     }
 
     navigate(0); // to ensure inputs are empty
