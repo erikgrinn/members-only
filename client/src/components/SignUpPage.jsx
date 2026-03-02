@@ -12,7 +12,7 @@ function SignUpPage() {
   //   useEffect(() => {}, []);
 
   async function handleSubmit(e) {
-    e.preventDefault(); // Prevent page reload (optional?)
+    e.preventDefault(); // Prevent page reload
 
     // Send data to backend
     const result = await fetch("http://localhost:8080/sign-up", {
@@ -20,15 +20,18 @@ function SignUpPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-    setUsername(""); // Clear input after submit
+    // Clear inputs after submit
+    setUsername(""); 
     setPassword("");
 
     if (!result.ok) {
       const errorData = await result.json();
       alert(Error(errorData.message));
+      navigate(0)
+      return
     }
 
-    navigate(0); // to ensure inputs are empty
+    navigate("/log-in");
   }
 
   const signUp = (

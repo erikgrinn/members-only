@@ -67,11 +67,12 @@ img.big {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
   background-color: rgb(251, 251, 251);
   box-shadow: 5px 5px 5px rgb(155, 162, 164);
   padding: 28px 24px;
+  width: 600px;
   /* background-color: #2f3927; */
 }
 
@@ -86,7 +87,7 @@ unnecessary right margins on right side inputs for example
 */
 .input-group {
   display: flex;
-  width: 600px;
+  width: 250px;
   margin-bottom: 10px;
   /* margin-right: 28px; */
   /* justify-content: center; */
@@ -108,9 +109,6 @@ unnecessary right margins on right side inputs for example
 }
 
 .input-half input {
-  width: 250px;
-}
-.input-half label {
   width: 250px;
 }
 
