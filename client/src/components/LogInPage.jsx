@@ -27,6 +27,7 @@ function LogInPage() {
     if (!result.ok) {
       const errorData = await result.text(); //json if custom log-in route backend
       alert(Error(errorData));
+      return;
     }
 
     navigate(0); // to ensure inputs are empty

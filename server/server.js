@@ -131,6 +131,18 @@ app.get("/status", (req, res) => {
   res.json({ user: res.locals.currentUser });
 });
 
+const SECRET_PASSWORD = "super secret";
+app.post("/secret", async (req, res) => {
+  if (req.body.secretPassword == SECRET_PASSWORD) {
+    const userId = res.locals.currentUser.id; // get userId from authenticated user
+    console.log(userId)
+    await pool.query("UPDATE users SET role = $1 WHERE id = $2", ['member', userId]);
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: "Incorrect secret password" });
+  }
+});
+
 // passport adds req.logout that logs out of session
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {

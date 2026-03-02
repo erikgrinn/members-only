@@ -7,6 +7,7 @@ function SecretPage() {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState("");
+  const [secretPassword, setSecretPassword] = useState("");
 
   useEffect(() => {
     async function getStatusEffect() {
@@ -22,25 +23,24 @@ function SecretPage() {
     getStatusEffect();
   }, []);
 
-  //   async function handleSubmitLogIn(e) {
-  //     e.preventDefault(); // Prevent page reload (optional?)
+    async function handleSubmitSecret(e) {
+      e.preventDefault(); // Prevent page reload (optional?)
 
-  //     // Send data to backend
-  //     const result = await fetch("http://localhost:8080/log-in", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-  //     // setUsername(""); // Clear input after submit
-  //     // setPassword("");
+      // Send data to backend
+      const result = await fetch("http://localhost:8080/secret", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secretPassword }),
+        credentials: "include"
+      });
 
-  //     if (!result.ok) {
-  //       const errorData = await result.text(); //json if custom log-in route backend
-  //       alert(Error(errorData));
-  //     }
+      if (!result.ok) {
+        const errorData = await result.text(); //json if custom log-in route backend
+        alert(Error(errorData));
+      }
 
-  //     navigate(0); // to ensure inputs are empty
-  //   }
+      navigate(0); // to ensure inputs are empty
+    }
 
   const secret = (
     <>
@@ -51,27 +51,27 @@ function SecretPage() {
         </div> */}
       </div>
       <div className="right">
-        <div className="header">Welcome, {currentUser}.</div>
-        {/* <form onSubmit={handleSubmitLogIn} noValidate>
+        <div className="header">Welcome, {currentUser}. What is the secret password?</div>
+        <form onSubmit={handleSubmitSecret} noValidate>
           <div className="container">
             <div className="input-group">
               <div className="input-half input-left">
-                <label htmlFor="username">USERNAME</label>
-                <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required />
-                <span className="error-message" id="username-error"></span>
+                <label htmlFor="secret-password">Secret Password</label>
+                <input type="password" id="secret-password" onChange={(e) => setSecretPassword(e.target.value)} required />
+                <span className="error-message" id="secret-password-error"></span>
               </div>
-              <div className="input-half input-right">
+              {/* <div className="input-half input-right">
                 <label htmlFor="password">PASSWORD</label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
                 <span className="error-message" id="password-error"></span>
-              </div>
+              </div> */}
             </div>
           </div>
-          <button type="submit">Log In</button>
-          <div className="signup">
+          <button type="submit">Submit</button>
+          {/* <div className="secret">
             Don&apos;t have an account? <a href="/sign-up">Sign Up</a>
-          </div>
-        </form> */}
+          </div> */}
+        </form>
       </div>
     </>
   );

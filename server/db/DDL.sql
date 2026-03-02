@@ -6,6 +6,7 @@ CREATE TABLE "users" (
   "username" varchar,
   "password" varchar,
   "role" varchar,
+  "admin" boolean DEFAULT FALSE,
   "created_at" timestamp
 );
 
