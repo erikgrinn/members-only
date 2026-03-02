@@ -24,8 +24,8 @@ function LogInPage() {
     setPassword("");
 
     if (!result.ok) {
-      const errorData = await result.json();
-      alert(Error(errorData.message));
+      const errorData = await result.text(); //json if custom log-in route backend
+      alert(Error(errorData));
     }
 
     navigate(0); // to ensure inputs are empty

@@ -21,14 +21,14 @@ function SignUpPage() {
       body: JSON.stringify({ username, password }),
     });
     // Clear inputs after submit
-    setUsername(""); 
+    setUsername("");
     setPassword("");
 
     if (!result.ok) {
       const errorData = await result.json();
       alert(Error(errorData.message));
-      navigate(0)
-      return
+      navigate(0);
+      return;
     }
 
     navigate("/log-in");

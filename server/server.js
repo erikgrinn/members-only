@@ -90,22 +90,28 @@ app.post("/sign-up", async (req, res, next) => {
 
 // app.use("/sign-up", signUpRouter);
 
-app.post("/log-in", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) {
-      // sends a JSON 401 response, and error handler is not needed for this case
-      return res.status(401).json({ success: false, message: info?.message || "Authentication failed" });
-    }
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-      // place in res.locals
-      res.locals.currentUser = req.user;
-      console.log("logged in user: ", req.user);
-      return res.json({ success: true, user });
-    });
-  })(req, res, next); // invoking the arrow function/custom callback
+app.post("/log-in", passport.authenticate("local"), (req, res) => {
+  res.locals.currentUser = req.user;
+  console.log("Logged in user: ", req.user);
+  res.json({ success: true, user: req.user });
 });
+
+// app.post("/log-in", (req, res, next) => {
+//   passport.authenticate("local", (err, user, info) => {
+//     if (err) return next(err);
+//     if (!user) {
+//       // sends a JSON 401 response, and error handler is not needed for this case
+//       return res.status(401).json({ success: false, message: info?.message || "Authentication failed" });
+//     }
+//     req.logIn(user, (err) => {
+//       if (err) return next(err);
+//       // place in res.locals
+//       res.locals.currentUser = req.user;
+//       console.log("logged in user: ", req.user);
+//       return res.json({ success: true, user });
+//     });
+//   })(req, res, next); // invoking the arrow function/custom callback
+// });
 
 // should grab user after authenticated
 // for ease of use throughout express
