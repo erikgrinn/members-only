@@ -81,7 +81,10 @@ app.post("/sign-up", async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10); // added for bcrypt
     // hashedPassword instead
-    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, hashedPassword]);
+    await pool.query(
+      "INSERT INTO users (username, password, first_name, last_name, email) VALUES ($1, $2, $3, $4, $5)",
+      [req.body.username, hashedPassword, req.body.firstName, req.body.lastName, req.body.email],
+    );
     res.redirect("/");
   } catch (err) {
     return next(err);
@@ -90,12 +93,14 @@ app.post("/sign-up", async (req, res, next) => {
 
 // app.use("/sign-up", signUpRouter);
 
+// an error only sends unauthorized, no additional error message
 app.post("/log-in", passport.authenticate("local"), (req, res) => {
   res.locals.currentUser = req.user;
   console.log("Logged in user: ", req.user);
   res.json({ success: true, user: req.user });
 });
 
+// below would be custom for more error info
 // app.post("/log-in", (req, res, next) => {
 //   passport.authenticate("local", (err, user, info) => {
 //     if (err) return next(err);

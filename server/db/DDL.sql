@@ -1,5 +1,8 @@
 CREATE TABLE "users" (
   "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  "first_name" varchar,
+  "last_name" varchar,
+  "email" varchar,
   "username" varchar,
   "password" varchar,
   "role" varchar,

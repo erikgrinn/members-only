@@ -8,17 +8,26 @@ function SignUpPage() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
   //   useEffect(() => {}, []);
 
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent page reload
 
+    if (password != confirmPassword) {
+      alert(new Error("Passwords do not match!"));
+      navigate(0);
+      return;
+    }
     // Send data to backend
     const result = await fetch("http://localhost:8080/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, firstName, lastName, email }),
     });
     // Clear inputs after submit
     setUsername("");
@@ -26,7 +35,7 @@ function SignUpPage() {
 
     if (!result.ok) {
       const errorData = await result.json();
-      alert(Error(errorData.message));
+      alert(new Error(errorData.message));
       navigate(0);
       return;
     }
@@ -46,17 +55,18 @@ function SignUpPage() {
         <div className="header">
           This is not a real online service! Do not use this form in any way except to revel in its glory!
         </div>
-        <form onSubmit={handleSubmit} noValidate>
+        {/* leaving out noValidate for now */}
+        <form onSubmit={handleSubmit}>
           <div className="container">
             <div className="input-group">
               <div className="input-half input-left">
                 <label htmlFor="first-name">FIRST NAME</label>
-                <input type="text" id="first-name" required />
+                <input type="text" id="first-name" onChange={(e) => setFirstName(e.target.value)} required />
                 <span className="error-message" id="first-name-error"></span>
               </div>
               <div className="input-half input-right">
                 <label htmlFor="last-name">LAST NAME</label>
-                <input type="text" id="last-name" required />
+                <input type="text" id="last-name" onChange={(e) => setLastName(e.target.value)} required />
                 <span className="error-message" id="last-name-error"></span>
               </div>
             </div>
@@ -68,7 +78,7 @@ function SignUpPage() {
               </div>
               <div className="input-half input-right">
                 <label htmlFor="email">EMAIL</label>
-                <input type="email" id="email" required />
+                <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} required />
                 <span className="error-message" id="email-error"></span>
               </div>
             </div>
@@ -80,7 +90,12 @@ function SignUpPage() {
               </div>
               <div className="input-half input-right">
                 <label htmlFor="confirm-password">CONFIRM PASSWORD</label>
-                <input type="password" id="confirm-password" required />
+                <input
+                  type="password"
+                  id="confirm-password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
                 <span className="error-message" id="confirm-password-error"></span>
               </div>
             </div>
