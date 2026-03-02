@@ -127,6 +127,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/status", (req, res) => {
+  res.json({ user: res.locals.currentUser });
+});
+
 // passport adds req.logout that logs out of session
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {

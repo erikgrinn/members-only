@@ -3,36 +3,46 @@ import { useNavigate } from "react-router-dom";
 
 import "../styles/login.css";
 
-function LogInPage() {
+function SecretPage() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
 
-  //   useEffect(() => {}, []);
-
-  async function handleSubmitLogIn(e) {
-    e.preventDefault(); // Prevent page reload (optional?)
-
-    // Send data to backend
-    const result = await fetch("http://localhost:8080/log-in", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-      credentials: "include",
-    });
-    // setUsername(""); // Clear input after submit
-    // setPassword("");
-
-    if (!result.ok) {
-      const errorData = await result.text(); //json if custom log-in route backend
-      alert(Error(errorData));
+  useEffect(() => {
+    async function getStatusEffect() {
+      try {
+        const response = await fetch("http://localhost:8080/status", { credentials: "include" });
+        const data = await response.json();
+        console.log(data);
+        setCurrentUser(data.user.username);
+      } catch (error) {
+        console.error(error);
+      }
     }
+    getStatusEffect();
+  }, []);
 
-    navigate(0); // to ensure inputs are empty
-  }
+  //   async function handleSubmitLogIn(e) {
+  //     e.preventDefault(); // Prevent page reload (optional?)
 
-  const logIn = (
+  //     // Send data to backend
+  //     const result = await fetch("http://localhost:8080/log-in", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ username, password }),
+  //     });
+  //     // setUsername(""); // Clear input after submit
+  //     // setPassword("");
+
+  //     if (!result.ok) {
+  //       const errorData = await result.text(); //json if custom log-in route backend
+  //       alert(Error(errorData));
+  //     }
+
+  //     navigate(0); // to ensure inputs are empty
+  //   }
+
+  const secret = (
     <>
       <div className="sidebar">
         <img src="/login-image.jpg" className="big" alt="galaxy" width="100" height="100" />
@@ -41,10 +51,8 @@ function LogInPage() {
         </div> */}
       </div>
       <div className="right">
-        <div className="header">
-          This is not a real online service! Do not use this form in any way except to revel in its glory!
-        </div>
-        <form onSubmit={handleSubmitLogIn} noValidate>
+        <div className="header">Welcome, {currentUser}.</div>
+        {/* <form onSubmit={handleSubmitLogIn} noValidate>
           <div className="container">
             <div className="input-group">
               <div className="input-half input-left">
@@ -63,14 +71,14 @@ function LogInPage() {
           <div className="signup">
             Don&apos;t have an account? <a href="/sign-up">Sign Up</a>
           </div>
-        </form>
+        </form> */}
       </div>
     </>
   );
   return (
     // use below for integration with React, using express.json()
     // make sure to match up with Express req.body
-    <>{logIn}</>
+    <>{secret}</>
 
     // use below for direct express.urlencoded(extended: false|true)
     // <>
@@ -86,4 +94,4 @@ function LogInPage() {
   );
 }
 
-export default LogInPage;
+export default SecretPage;

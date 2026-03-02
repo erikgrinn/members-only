@@ -53,13 +53,24 @@ function HomePage() {
   }
 
   return (
-    <div className="container">
-      <ul>
-        {fetchedData.map((user, idx) => (
-          <li key={idx}>{user.username}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="sidebar">
+        <img src="/login-image.jpg" className="big" alt="galaxy" width="100" height="100" />
+        {/* <div className="overlay">
+          <div className="logo-text">The Club</div>
+        </div> */}
+      </div>
+      <div className="right">
+        <div className="header">
+          This is not a real online service! Do not use this form in any way except to revel in its glory!
+        </div>
+        <div className="container"></div>
+        {/* <button type="submit">Log In</button> */}
+        {/* <div className="signup">
+            Don&apos;t have an account? <a href="/sign-up">Sign Up</a>
+          </div> */}
+      </div>
+    </>
   );
 }
 
@@ -100,7 +111,6 @@ export default HomePage;
 // export function useAuth() {
 //   return useContext(AuthContext);
 // }
-
 
 //usage
 

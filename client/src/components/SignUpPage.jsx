@@ -15,6 +15,18 @@ function SignUpPage() {
 
   //   useEffect(() => {}, []);
 
+  async function loginAndNavigate() {
+    const response = await fetch("http://localhost:8080/log-in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", // important for cookies/session
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+    console.log(data);
+    navigate("/secret-page");
+  }
+
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent page reload
 
@@ -29,9 +41,9 @@ function SignUpPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password, firstName, lastName, email }),
     });
-    // Clear inputs after submit
-    setUsername("");
-    setPassword("");
+    // // Clear inputs after submit
+    // setUsername("");
+    // setPassword("");
 
     if (!result.ok) {
       const errorData = await result.json();
@@ -40,7 +52,8 @@ function SignUpPage() {
       return;
     }
 
-    navigate("/log-in");
+    loginAndNavigate();
+    // navigate(0);
   }
 
   const signUp = (
@@ -48,7 +61,7 @@ function SignUpPage() {
       <div className="sidebar">
         <img src="/login-image.jpg" className="big" alt="galaxy" width="100" height="100" />
         {/* <div className="overlay">
-          <div className="logo-text">ODIN</div>
+          <div className="logo-text">The Club</div>
         </div> */}
       </div>
       <div className="right">
